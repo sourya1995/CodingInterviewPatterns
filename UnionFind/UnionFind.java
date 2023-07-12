@@ -1,43 +1,58 @@
+import java.util.*;
+
 public class UnionFind {
+    private List<Integer> parent;
+    private List<Integer> rank;
+    private int count;
 
-    public int[] parent;
-    public int[] rank;
+    public UnionFind(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        this.parent = new ArrayList<>();
+        this.rank = new ArrayList<>();
+        this.count = 0;
 
-    public UnionFind(int n) {
-        parent = new int[n + 1];
-        rank = new int[n + 1];
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            rank[i] = 1;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (grid[r][c] == '1') {
+                    parent.add(r * cols + c);
+                    this.count++;
+                } else {
+                    this.parent.add(-1);
+                }
+                this.rank.add(1);
+            }
+        }
+    }
+
+    public List<Integer> getParent() {
+        return this.parent;
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public void union(int v1, int v2) {
+        int p1 = find(v1);
+        int p2 = find(v2);
+        if (p1 != p2) {
+            if (this.rank.get(p1) > this.rank.get(p2)) {
+                this.parent.set(p2, p1);
+            } else if (this.rank.get(p1) < this.rank.get(p2)) {
+                this.parent.set(p1, p2);
+            } else {
+                this.parent.set(p2, p1);
+                this.rank.set(p1, this.rank.get(p1) + 1);
+            }
+            count--;
         }
     }
 
     public int find(int v) {
-        if (parent[v] != v) {
-            parent[v] = find(parent[v]);
+        if (this.parent.get(v) != v) {
+            this.parent.set(v, this.find(this.parent.get(v)));
         }
-        return parent[v];
-    }
-
-    public boolean union(int v1, int v2) {
-        int p1 = find(v1);
-        int p2 = find(v2);
-
-        if (p1 == p2) {
-            return false;
-        }
-
-        else if (rank[p1] > rank[p2]) {
-            parent[p2] = p1;
-            rank[p1] += rank[p2];
-
-        }
-
-        else {
-            parent[p1] = p2;
-            rank[p2] += rank[p1];
-        }
-
-        return true;
+        return this.parent.get(v);
     }
 }
