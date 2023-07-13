@@ -47,6 +47,14 @@ class Rectangle {
         return !(x + width < other.x || other.x + other.width < x || y + height < other.y
                 || other.y + other.height < y);
     }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
 }
 
 class QuadTree {
