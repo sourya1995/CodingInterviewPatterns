@@ -31,3 +31,10 @@ public class MinDeletesAndRemovals {
         return lookupTable[m][n];
     }
 }
+
+public static int[] minDelIns(String str1, String str2) {
+    int n = findMaxMatchingSubseq(str1, str2);
+    int deletions = str1.length() - n;
+    int insertions = str2.length() - n;
+    return new int[]{deletions, insertions};
+}
