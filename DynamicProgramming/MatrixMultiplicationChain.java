@@ -1,4 +1,4 @@
-package BitManipulation;
+package DynamicProgramming;
 
 public class MatrixMultiplicationChain {
     public static long minMultiplications(int[] dims){
