@@ -20,9 +20,15 @@ public class LongestAlternatingSubsequence {
             }
 
             else if (nums[current] < nums[previous]) {
+                dp[1][current] = 1 + dp[0][previous];
+                dp[0][current] = dp[0][previous];
+            }
+
+            else if(nums[current] == nums[previous]) {
                 dp[1][current] = dp[1][previous];
                 dp[0][current] = dp[0][previous];
             }
+
         }
 
         return Math.max(dp[1][n - 1], dp[0][n - 1]);
